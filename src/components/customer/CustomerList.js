@@ -17,7 +17,7 @@ export const CustomerList = () => {
             <article className="customers">
                 {
                     customers.map(customer => {
-                        customer.animals = animals.filter(a => customer.id === a.customerId) || []
+                        customer.animals = animals.filter(a => customer.id === a.customer_id) || []
                         return <section key={customer.id} className="customer">
                             <h2>{customer.name}</h2>
                             <div>{customer.address}</div>
