@@ -12,7 +12,10 @@ export const Login = props => {
     const existingUserCheck = () => {
         return fetch(`http://localhost:8088/customers?email=${email.current.value}`)
             .then(_ => _.json())
-            .then(user => user.hasOwnProperty("email") ? user : false)
+            .then(user =>{
+                console.log(user)
+                return user.hasOwnProperty("email") ? user : false
+            })
     }
 
     const handleLogin = (e) => {
