@@ -11,17 +11,17 @@ export const EmployeeDetail = (props) => {
     const { employees, getEmployees } = useContext(EmployeeContext)
 
     const [animal, setAnimals] = useState([{name:{}}])
-    const [employee, setEmployee] = useState({})
+    const [employee, setEmployee] = useState({location:{}})
     const [location, setLocation] = useState({})
 
     useEffect(() => {
         getLocations()
-            .then(getEmployees)
-            .then(getAnimals)
+        getEmployees()
+        getAnimals()
     }, [])
 
     useEffect(() => {
-        const employee = employees.find(e => e.id === parseInt(props.match.params.employeeId)) || {}
+        const employee = employees.find(e => e.id === parseInt(props.match.params.employeeId)) || {location:{}}
         setEmployee(employee)
     }, [employees])
 
@@ -36,7 +36,7 @@ export const EmployeeDetail = (props) => {
     return (
         <section className="employee">
             <h3 className="employee__name">{employee.name}</h3>
-            <div>Currently working at { location.name }</div>
+            <div>Currently working at { employee.location.name }</div>
             <div>
                 {
                 (animal === null)
