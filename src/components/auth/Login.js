@@ -12,14 +12,17 @@ export const Login = props => {
     const existingUserCheck = () => {
         return fetch(`http://localhost:8088/customers?email=${email.current.value}`)
             .then(_ => _.json())
-            .then(user => user.length ? user[0] : false)
+            .then(user =>{
+                console.log(user)
+                return user.hasOwnProperty("email") ? user : false
+            })
     }
 
     const handleLogin = (e) => {
         e.preventDefault()
-
         existingUserCheck()
-            .then(exists => {
+            .then(exists => { 
+                console.log(exists)
                 if (exists && exists.password === password.current.value) {
                     localStorage.setItem("kennel_customer", exists.id)
                     props.history.push("/")

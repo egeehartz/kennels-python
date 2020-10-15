@@ -10,40 +10,38 @@ export const EmployeeDetail = (props) => {
     const { locations, getLocations } = useContext(LocationContext)
     const { employees, getEmployees } = useContext(EmployeeContext)
 
-    const [animal, setAnimal] = useState({})
-    const [employee, setEmployee] = useState({})
+    const [animal, setAnimals] = useState([{name:{}}])
+    const [employee, setEmployee] = useState({location:{}})
     const [location, setLocation] = useState({})
 
     useEffect(() => {
         getLocations()
-            .then(getEmployees)
-            .then(getAnimals)
+        getEmployees()
+        getAnimals()
     }, [])
 
     useEffect(() => {
-        const animal = animals.find(a => a.id === employee.animalId) || {}
-        setAnimal(animal)
-    }, [animals])
-
-    useEffect(() => {
-        const employee = employees.find(e => e.id === parseInt(props.match.params.employeeId)) || {}
+        const employee = employees.find(e => e.id === parseInt(props.match.params.employeeId)) || {location:{}}
         setEmployee(employee)
     }, [employees])
 
     useEffect(() => {
-        const location = locations.find(l => l.id === employee.locationId) || {}
+        const location = locations.find(l => l.id === employee.location_id) || {}
+        const animal = animals.filter(a => a.location_id === location.id) || {}
         setLocation(location)
-    }, [locations])
+        setAnimals(animal)
+    }, [employee])
+
 
     return (
         <section className="employee">
             <h3 className="employee__name">{employee.name}</h3>
-            <div>Currently working at { location.name }</div>
+            <div>Currently working at { employee.location.name }</div>
             <div>
                 {
-                (employee.animalId === null)
+                (animal === null)
                     ? "Not assigned to an animal"
-                    : `Currently taking care of ${animal.name}`
+                    : `Currently taking care of ${animal.map(a => a.name).join(", ")}`
                 }
             </div>
         </section>
