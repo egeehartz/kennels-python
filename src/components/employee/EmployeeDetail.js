@@ -8,7 +8,7 @@ import "./Employees.css"
 export const EmployeeDetail = (props) => {
     const { animals, getAnimals } = useContext(AnimalContext)
     const { locations, getLocations } = useContext(LocationContext)
-    const { employees, getEmployees } = useContext(EmployeeContext)
+    const { employees, getEmployees, fireEmployee } = useContext(EmployeeContext)
 
     const [animal, setAnimals] = useState([{name:{}}])
     const [employee, setEmployee] = useState({location:{}})
@@ -44,6 +44,10 @@ export const EmployeeDetail = (props) => {
                     : `Currently taking care of ${animal.map(a => a.name).join(", ")}`
                 }
             </div>
+            <button onClick={() => {
+                fireEmployee(employee.id)
+                props.history.push("/employees")}
+                }>Fire Employee</button>
         </section>
     )
 }

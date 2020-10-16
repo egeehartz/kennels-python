@@ -19,7 +19,7 @@ export const EmployeeForm = (burrito) => {
     */
     const name = useRef(null)
     const location = useRef(null)
-    const animal = useRef(null)
+    const address = useRef(null)
 
     /*
         Get animal state and location state on initialization.
@@ -35,16 +35,16 @@ export const EmployeeForm = (burrito) => {
             can't just ask for the `.value` property directly,
             but rather `.current.value` now in React.
         */
-        const locationId = parseInt(location.current.value)
-        const animalId = parseInt(animal.current.value)
+        const location_id = parseInt(location.current.value)
+        //const animalId = parseInt(animal.current.value)
 
-        if (locationId === 0) {
+        if (location_id === 0) {
             window.alert("Please select a location")
         } else {
             addEmployee({
                 name: name.current.value,
-                locationId,
-                animalId
+                location_id,
+                address: address.current.value
             })
             .then(() => burrito.history.push("/employees"))
         }
@@ -75,14 +75,7 @@ export const EmployeeForm = (burrito) => {
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="location">Caretaker for: </label>
-                    <select defaultValue="" name="animal" ref={animal} id="employeeAnimal" className="form-control" >
-                        <option value="0">Select an animal</option>
-                        {animals.map(e => (
-                            <option key={e.id} value={e.id}>
-                                {e.name}
-                            </option>
-                        ))}
-                    </select>
+                    <input type="text" id="address" ref={address} required autoFocus className="form-control" placeholder="Address" />
                 </div>
             </fieldset>
             <button type="submit"
